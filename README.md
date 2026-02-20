@@ -2,6 +2,12 @@
 
 Production-grade Rails API for managing feature flags with user, group, and region-based overrides. Supports runtime evaluation with configurable precedence and in-memory caching.
 
+## Requirements
+
+- **Ruby:** 3.4.2
+- **Rails:** 8.0.2+
+- **PostgreSQL:** 9.3+
+
 ## Quick Start
 
 ```bash
@@ -19,7 +25,9 @@ API available at `http://localhost:3000/api/v1`
 **Structure:**
 ```
 app/
-├── controllers/api/v1/     # HTTP layer (thin)
+├── controllers/
+│   ├── api/v1/             # HTTP layer (thin)
+│   └── concerns/           # Shared controller concerns (ErrorHandler)
 ├── models/                  # Data models with validations
 ├── services/feature_flags/  # Business logic (Evaluator, RuleEngine, CRUD services)
 └── errors/                  # Custom error classes
@@ -95,6 +103,7 @@ Body: { "type": "user|group|region", "identifier": "id" }
 ```
 
 **Error Handling Architecture:**
+- **ErrorHandler Concern**: Centralized error handling module (`app/controllers/concerns/error_handler.rb`) included in `ApplicationController`
 - **Custom Errors** (`ApplicationError` subclasses): Use `to_json` method for consistent formatting
   - `ValidationError`: Service validation failures
   - `FeatureFlagError`: Feature flag specific errors
@@ -167,4 +176,4 @@ bundle exec rspec
 
 ---
 
-**Stack:** Rails 8.0, PostgreSQL, RSpec | **Architecture:** Clean Architecture, SOLID, Service Objects, Strategy Pattern | **Coverage:** 90%+
+**Stack:** Ruby 3.4.2, Rails 8.0, PostgreSQL, RSpec | **Architecture:** Clean Architecture, SOLID, Service Objects, Strategy Pattern | **Coverage:** 90%+
