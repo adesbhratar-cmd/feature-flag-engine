@@ -1,0 +1,15 @@
+FactoryBot.define do
+  factory :region_override do
+    association :feature_flag
+    sequence(:region) { |n| "region_#{n}" }
+    enabled { false }
+
+    trait :enabled do
+      enabled { true }
+    end
+
+    trait :disabled do
+      enabled { false }
+    end
+  end
+end
